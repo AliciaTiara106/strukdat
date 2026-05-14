@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struktur Data - Bubble sort</title>
+    <title>Struktur Data - Soal 1</title>
     <style>
         /* CSS disesuaikan agar sama persis dengan index.html kamu */
         * {
@@ -142,9 +142,9 @@
         }
 
         .underflow-warning {
-            background-color: #fff1f1;
+            background-color: #6495ED;
             border: 1px solid #ffcccc;
-            color: #b91c1c;
+            color: #EEE8AA;
             padding: 15px;
             margin-top: 20px;
             border-radius: 5px;
@@ -166,63 +166,36 @@
             <li><a href="prti.html">Prefix to Infix</a></li>
             <li><a href="epo.html">Evaluasi Postfix</a></li>
             <li><a href="epr.html">Evaluasi Prefix</a></li>
-            <li class="active"><a href="bs.html">Buble Sort</a></li>
+            <li><a href="bs.html">Buble Sort</a></li>
             <li><a href="ss.html">Selection Sort</a></li>
             <li><a href="is.html">Insertion Sort</a></li>
             <li><a href="hs.html">Hashing</a></li>
             <li><a href="qs.html">Quick Sort</a></li>
             <li><a href="ms.html">Merge Sort</a></li>
-            <li><a href="soal1.html">Soal 1</a></li>
+            <li class="active"><a href="soal1.html">Soal 1</a></li>
             <li><a href="soal2.html">Soal 2</a></li>
-            <li><a href="tambahanmq.html">Tambahan Merge & Quick Sort</a></li>            
+            <li><a href="tambahanmq.html">Tambahan Merge & Quick Sort</a></li>
         </ul>
     </nav>
 
     <!-- Konten Materi Stack -->
     <main class="main-content">
-        <h1>Bubble Sort</h1>
+        <h1>Soal 1</h1>
         
-        <p>Algoritma pengurutan yang pertama adalah Bubble Sort. Algoritma ini dikenal sebagai algoritma pengurutan yang membutuhkan waktu paling lama, hanya saja algoritma ini adalah algoritma pengurutan yang paling sederhana.<br>
-Bubble sort mengurutkan data dengan cara sebagai berikut :<br>
-1. data dibaca mulai dari paling kiri atau mulai dari indeks ke 0 (phyton) dari suatu list data<br>
-2. Bandingkan antara dua buah data yang saling berdekatan (antara data ke i dan i+1), tukar posisi jika data ke-i lebih besar dibandingkan data ke-i+1 (pengurutan secara ascending)<br>
-3. pindah satu posisi<br>
-4. lakukan perbandingan seperti langkah ke-2 dan pindah satu posisi kembali seperti langkah ke-3. Lakukan terus menerus sampai indeks data terakhir.<br>
-5. Setelah langkah ke-4 dilakukan, maka data yang berada di posisi paling kanan (indeks ke-N) adalah data terbesar.<br>
-6. Ulangi lagi langkah 1-4 dimulai dari indeks data ke 0 sampai dengan indeks ke N-1, N-2, ..., 0</p>
+        <p>1. Sebuah tumpukan (Stack) kosong diberikan operasi sebagai berikut secara berurutan:<br>
+Push(5)<br>
+Push(10)<br> 
+Push(15)<br>
+Pop()<br>
+Push(20)<br>
+Berapakah nilai yang berada di posisi paling atas (Top) sekarang?</p><br>
 
+        <p>2. Dalam sebuah antrean, jika data yang masuk pertama kali adalah angka 100, maka data yang akan keluar pertama kali saat operasi antrean dua arah dilakukan adalah...</p><br>
 
-        <div class="image-placeholder">
-            <img src="bs.jpg">
-        </div>
-	<h3>Implementasi Python:</h3>
-        <div class="code-container">
-            <div class="code-header">
-                <span>python</span>
-                <button class="copy-btn" onclick="copyCode()">Copy</button>
-            </div>
-            <pre id="python-code">
-#bublesort
-#lebih kecil duluan(ascending)
-lst = [5,0,1,10,7,2,5,4,6,9]
-print(lst)
-for k in range(1,len(lst)):
-  for i in range(0,len(lst)-1):
-    if lst[i]>lst[i+1]:
-      lst[i],lst[i+1] = lst[i+1],lst[i]
-print(lst)
+        <p>3. Ubahlah ekspresi Infix berikut menjadi bentuk Postfix: A + B * C</p><br>
 
-print()
+        <p>4. Urutkan operator berikut dari presedensi (kekuatan) tertinggi ke terendah: +, *, ( ), **.</p>
 
-#lebih besar duluan(discending)
-lst = [5,0,1,10,7,2,5,4,6,9]
-print(lst)
-for k in range(1,len(lst)):
-  for i in range(0,len(lst)-1):
-    if lst[i]<lst[i+1]:
-      lst[i],lst[i+1] = lst[i+1],lst[i]
-print(lst)</pre>
-</div>
      </main>
     <script>
         function copyCode() {

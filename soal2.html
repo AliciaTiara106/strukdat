@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struktur Data - Bubble sort</title>
+    <title>Struktur Data - Soal 1</title>
     <style>
         /* CSS disesuaikan agar sama persis dengan index.html kamu */
         * {
@@ -142,9 +142,9 @@
         }
 
         .underflow-warning {
-            background-color: #fff1f1;
+            background-color: #6495ED;
             border: 1px solid #ffcccc;
-            color: #b91c1c;
+            color: #EEE8AA;
             padding: 15px;
             margin-top: 20px;
             border-radius: 5px;
@@ -166,35 +166,27 @@
             <li><a href="prti.html">Prefix to Infix</a></li>
             <li><a href="epo.html">Evaluasi Postfix</a></li>
             <li><a href="epr.html">Evaluasi Prefix</a></li>
-            <li class="active"><a href="bs.html">Buble Sort</a></li>
+            <li><a href="bs.html">Buble Sort</a></li>
             <li><a href="ss.html">Selection Sort</a></li>
             <li><a href="is.html">Insertion Sort</a></li>
             <li><a href="hs.html">Hashing</a></li>
             <li><a href="qs.html">Quick Sort</a></li>
             <li><a href="ms.html">Merge Sort</a></li>
             <li><a href="soal1.html">Soal 1</a></li>
-            <li><a href="soal2.html">Soal 2</a></li>
-            <li><a href="tambahanmq.html">Tambahan Merge & Quick Sort</a></li>            
+            <li class="active"><a href="soal2.html">Soal 2</a></li>
+            <li><a href="tambahanmq.html">Tambahan Merge & Quick Sort</a></li>
         </ul>
     </nav>
 
     <!-- Konten Materi Stack -->
     <main class="main-content">
-        <h1>Bubble Sort</h1>
+        <h1>Soal 2</h1>
         
-        <p>Algoritma pengurutan yang pertama adalah Bubble Sort. Algoritma ini dikenal sebagai algoritma pengurutan yang membutuhkan waktu paling lama, hanya saja algoritma ini adalah algoritma pengurutan yang paling sederhana.<br>
-Bubble sort mengurutkan data dengan cara sebagai berikut :<br>
-1. data dibaca mulai dari paling kiri atau mulai dari indeks ke 0 (phyton) dari suatu list data<br>
-2. Bandingkan antara dua buah data yang saling berdekatan (antara data ke i dan i+1), tukar posisi jika data ke-i lebih besar dibandingkan data ke-i+1 (pengurutan secara ascending)<br>
-3. pindah satu posisi<br>
-4. lakukan perbandingan seperti langkah ke-2 dan pindah satu posisi kembali seperti langkah ke-3. Lakukan terus menerus sampai indeks data terakhir.<br>
-5. Setelah langkah ke-4 dilakukan, maka data yang berada di posisi paling kanan (indeks ke-N) adalah data terbesar.<br>
-6. Ulangi lagi langkah 1-4 dimulai dari indeks data ke 0 sampai dengan indeks ke N-1, N-2, ..., 0</p>
-
+        <p>Buatkanlah analisa sorting untuk 100, 500 data dianalisa waktunya</p>
 
         <div class="image-placeholder">
-            <img src="bs.jpg">
-        </div>
+            <img src="soal2.png">
+        </div>  
 	<h3>Implementasi Python:</h3>
         <div class="code-container">
             <div class="code-header">
@@ -202,27 +194,146 @@ Bubble sort mengurutkan data dengan cara sebagai berikut :<br>
                 <button class="copy-btn" onclick="copyCode()">Copy</button>
             </div>
             <pre id="python-code">
-#bublesort
-#lebih kecil duluan(ascending)
-lst = [5,0,1,10,7,2,5,4,6,9]
-print(lst)
-for k in range(1,len(lst)):
-  for i in range(0,len(lst)-1):
-    if lst[i]>lst[i+1]:
-      lst[i],lst[i+1] = lst[i+1],lst[i]
-print(lst)
+import time
+import random
 
-print()
+# 1. BUBBLE SORT
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
 
-#lebih besar duluan(discending)
-lst = [5,0,1,10,7,2,5,4,6,9]
-print(lst)
-for k in range(1,len(lst)):
-  for i in range(0,len(lst)-1):
-    if lst[i]<lst[i+1]:
-      lst[i],lst[i+1] = lst[i+1],lst[i]
-print(lst)</pre>
+# 2. SELECTION SORT
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr
+
+# 3. INSERTION SORT
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+
+# 4. MERGE SORT
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
+# 5. QUICK SORT
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+
+# --- FUNGSI UNTUK TESTING ---
+def jalankan_tes(jumlah_data):
+    # Buat data acak
+    data_acak = [random.randint(0, 1000) for _ in range(jumlah_data)]
+    
+    algoritma = {
+        "Bubble Sort": bubble_sort,
+        "Selection Sort": selection_sort,
+        "Insertion Sort": insertion_sort,
+        "Merge Sort": merge_sort,
+        "Quick Sort": quick_sort
+    }
+    
+    print(f"--- Hasil untuk {jumlah_data} data ---")
+    for nama, fungsi in algoritma.items():
+        copy_data = data_acak.copy()
+        start = time.perf_counter()
+        fungsi(copy_data)
+        end = time.perf_counter()
+        durasi = (end - start) * 1000 # milidetik
+        print(f"{nama:15}: {durasi:.4f} ms")
+    print("\n")
+
+# Eksekusi simulasi
+jalankan_tes(100)
+jalankan_tes(500)
+</pre>
 </div>
+
+<table border="1" cellspacing="0" cellpadding="50">
+    <tr>
+        <th>Algoritma</th>
+        <th>100 Data</th>
+        <th>500 Data</th>
+        <th>Karakteristik</th>
+    </tr>
+    <tr>
+        <td>Quick Sort</td>
+        <td>~0.28 ms</td> 
+        <td>~1.58 ms</td>
+        <td>Paling cepat (Divide & Conquer)</td>
+    </tr>
+    <tr>
+        <td>Merge Sort</td>
+        <td>~0.37 ms</td>
+        <td>~2.25 ms</td>
+        <td>Stabil dan cepat</td>
+    </tr>
+    <tr>
+        <td>Insertion Sort</td>
+        <td>~0.57 ms</td>
+        <td>~14.09 ms</td>
+        <td>Efisien untuk data kecil</td>
+    </tr>
+    <tr>
+        <td>Selection Sort</td>
+        <td>~0.47 ms</td>
+        <td>~14.75 ms</td>
+        <td>Jumlah pertukaran minimal</td>
+    </tr>
+    <tr>
+        <td>Bubble Sort</td>
+        <td>~1.05 ms</td>
+        <td>~25.88 ms</td>
+        <td>Paling lambat (Banyak perbandingan)</td>
+</table>
+<strong>Analisis Singkat</strong><br>
+<b>1.</b> Efisiensi Skala: Algoritma seperti Quick Sort dan Merge Sort menunjukkan kenaikan waktu yang sangat landai meskipun data bertambah 5 kali lipat. Ini karena kompleksitas waktunya adalah O(n log n).<br>
+<b>2.</b> Algoritma Kuadratik: Bubble, Selection, dan Insertion Sort memiliki kompleksitas O(n^2). Bisa dilihat pada grafik bahwa waktu eksekusinya meningkat secara signifikan (eksponensial) saat jumlah data bertambah.<br>
+<b>3.</b> Bubble Sort secara konsisten menjadi yang paling lambat karena proses pengecekan dan pertukaran tetangga yang terjadi berulang kali di setiap iterasi.</p>
+
      </main>
     <script>
         function copyCode() {
@@ -240,6 +351,3 @@ print(lst)</pre>
                 }, 2000);
             });
         }
-    </script>
-</body>
-</html>
