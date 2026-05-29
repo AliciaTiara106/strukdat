@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struktur Data - Quick Sort</title>
+    <title>Struktur Data - Link List</title>
     <style>
         /* CSS disesuaikan agar sama persis dengan index.html kamu */
         * {
@@ -74,11 +74,17 @@
         }
 
         .image-placeholder {
+            max-width: 100%;
             border: 1px solid #ccc;
             padding: 20px;
             text-align: center;
             margin: 20px 0;
             background-color: #fafafa;
+        }
+        .image-placeholder img {
+            max-width: 100%; 
+            height: auto;
+            display: block;
         }
 
 /* STYLING KOTAK KODE (Copy-Paste) */
@@ -142,9 +148,9 @@
         }
 
         .underflow-warning {
-            background-color: #6495ED;
+            background-color: #fff1f1;
             border: 1px solid #ffcccc;
-            color: #EEE8AA;
+            color: #b91c1c;
             padding: 15px;
             margin-top: 20px;
             border-radius: 5px;
@@ -170,63 +176,135 @@
             <li><a href="ss.html">Selection Sort</a></li>
             <li><a href="is.html">Insertion Sort</a></li>
             <li><a href="hs.html">Hashing</a></li>
-            <li class="active"><a href="qs.html">Quick Sort</a></li>
+            <li><a href="qs.html">Quick Sort</a></li>
             <li><a href="ms.html">Merge Sort</a></li>
             <li><a href="soal1.html">Soal 1</a></li>
             <li><a href="soal2.html">Soal 2</a></li>
             <li><a href="tambahanmq.html">Tambahan Merge & Quick Sort</a></li>
-            <li><a href="ll.html">Link List</a></li>
+            <li class="active"><a href="ll.html">Link List</a></li>
             <li><a href="tree.html">Tree</a></li>
         </ul>
     </nav>
 
     <!-- Konten Materi Stack -->
     <main class="main-content">
-        <h1>Quick Sort</h1>
+        <h1>Link List</h1>
         
-        <p> Quicksort adalah salah satu algoritme penyortiran tercepat. Algoritma Quicksort mengambil array nilai, 
-            memilih salah satu nilai sebagai elemen 'pivot', dan memindahkan nilai lainnya sehingga nilai yang lebih rendah berada di sebelah kiri elemen pivot, dan nilai yang lebih tinggi berada di sebelah kanannya.</p>
+        <p><strong>Link List</strong> adalah sebuah struktur data dinamis yang dibuat secara manual. Pada Linked List, data di dalam memori berada di alamat yang berbeda-beda (tidak berurutan secara fisik). Agar data tersebut saling terhubung, setiap elemen memuat informasi tambahan yang menunjuk ke alamat data berikutnya.<br>
+            <strong>Lima elemen utama pada Linked List meliputi:</strong><br>
+            1. Node: Unit terkecil penyusun list.<br>
+            2. Head: Penunjuk lokasi node pertama (external reference).<br>
+            3. Next: Pointer/penunjuk ke node selanjutnya.<br>
+            4. Data/Value: Nilai yang disimpan di dalam node.<br>
+            5. None/Nil/Ground: Penunjuk bahwa data tersebut berada di akhir list (tidak ada data berikutnya)
+        </p>
 
-        <div class="underflow-warning">
-            <strong>Rekursi:</strong>  adalah ketika fungsi memanggil dirinya sendiri.<br>
-Setelah algoritma Quicksort menempatkan elemen pivot di antara sub-array dengan nilai yang lebih rendah di sisi kiri, dan sub-array dengan nilai yang lebih tinggi di sisi kanan, algoritme memanggil dirinya sendiri dua kali, sehingga Quicksort berjalan lagi untuk sub-array di sisi kiri, dan untuk sub-array di sisi kanan. Algoritma Quicksort terus menyebut dirinya sendiri hingga sub-array terlalu kecil untuk diurutkan.
+        <div class="op-item">
+            <span class="op-name">Node</span> &rarr; Sebuah node minimal harus menyimpan dua jenis informasi: data (nilai asli) dan next (tujuan node berikutnya).
         </div>
+
         <div class="image-placeholder">
-            <img src="qs.jpg">
-        </div>  
-	<h3>Implementasi Python:</h3>
+            <img src="ll1.png">
+        </div>
+
+        <div class="image-placeholder">
+            <img src="ll2.png">
+        </div>
+	<h3>Implementasi Python:</h3><br>
+    Kode Program Node
         <div class="code-container">
             <div class="code-header">
                 <span>python</span>
                 <button class="copy-btn" onclick="copyCode()">Copy</button>
             </div>
             <pre id="python-code">
-def partition(array, low, high):
-  pivot = array[high]
-  i = low - 1
+class Node:
+    def __init__(self, init_data):
+        self.data = init_data
+        self.next = None
 
-  for j in range(low, high):
-     if array[j] <= pivot:
-       i += 1
-       array[i], array[j] = array[j], array[i]
+    def getData(self):
+        return self.data
 
-  array[i+1], array[high] = array[high], array[i+1]
-  return i+1
+    def getNext(self):
+        return self.next
 
-def quicksort(array, low=0, high=None):
-  if high is None:
-    high = len(array) - 1
+    def setData(self, newdata):
+        self.data = newdata
 
-  if low < high:
-    pivot_index = partition(array, low, high)
-    quicksort(array, low, pivot_index-1)
-    quicksort(array, pivot_index+1, high)
-
-mylist = [64, 34, 25, 5, 22, 11, 90, 12]
-quicksort(mylist)
-print(mylist)</pre>
+    def setNext(self, new_next):
+        self.next = new_next
+</pre>
 </div>
-     </main>
+Kode Program Linked List
+ <div class="code-container">
+            <div class="code-header">
+                <span>python</span>
+                <button class="copy-btn" onclick="copyCode()">Copy</button>
+            </div>
+            <pre id="python-code">
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def isEmpty(self):
+        return self.head == None
+
+    # Menambah data di awal list
+    def add(self, item):
+        temp = Node(item)
+        temp.setNext(self.head)
+        self.head = temp
+
+    # Menghitung jumlah node (Traversal)
+    def size(self):
+        current = self.head
+        count = 0
+        while current != None:
+            count = count + 1
+            current = current.getNext()
+        return count
+
+    # Mencari keberadaan data
+    def search(self, item):
+        current = self.head
+        found = False
+        while current != None and not found:
+            if current.getData() == item:
+                found = True
+            else:
+                current = current.getNext()
+        return found
+
+    # Menampilkan semua data ke layar
+    def display(self):
+        current = self.head
+        while current != None:
+            print(current.getData())
+            current = current.getNext()
+
+    # Menghapus node tertentu
+    def remove(self, item):
+        current = self.head
+        previous = None
+        found = False
+        
+        while not found:
+            if current.getData() == item:
+                found = True
+            else:
+                previous = current
+                current = current.getNext()
+                
+        if previous == None:
+            # Jika yang dihapus adalah node pertama (head)
+            self.head = current.getNext()
+        else:
+            # Jika di tengah atau di akhir
+            previous.setNext(current.getNext())</pre>
+</div>
+
+    </main>
     <script>
         function copyCode() {
             const code = document.getElementById('python-code').innerText;

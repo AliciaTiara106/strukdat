@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struktur Data - Quick Sort</title>
+    <title>Struktur Data - Tree</title>
     <style>
         /* CSS disesuaikan agar sama persis dengan index.html kamu */
         * {
@@ -74,13 +74,18 @@
         }
 
         .image-placeholder {
+            max-width: 100%;
             border: 1px solid #ccc;
             padding: 20px;
             text-align: center;
             margin: 20px 0;
             background-color: #fafafa;
         }
-
+        .image-placeholder img {
+            max-width: 100%; 
+            height: auto;
+            display: block;
+        }
 /* STYLING KOTAK KODE (Copy-Paste) */
         .code-container {
             position: relative;
@@ -142,9 +147,9 @@
         }
 
         .underflow-warning {
-            background-color: #6495ED;
+            background-color: #fff1f1;
             border: 1px solid #ffcccc;
-            color: #EEE8AA;
+            color: #b91c1c;
             padding: 15px;
             margin-top: 20px;
             border-radius: 5px;
@@ -170,63 +175,122 @@
             <li><a href="ss.html">Selection Sort</a></li>
             <li><a href="is.html">Insertion Sort</a></li>
             <li><a href="hs.html">Hashing</a></li>
-            <li class="active"><a href="qs.html">Quick Sort</a></li>
+            <li><a href="qs.html">Quick Sort</a></li>
             <li><a href="ms.html">Merge Sort</a></li>
             <li><a href="soal1.html">Soal 1</a></li>
             <li><a href="soal2.html">Soal 2</a></li>
             <li><a href="tambahanmq.html">Tambahan Merge & Quick Sort</a></li>
             <li><a href="ll.html">Link List</a></li>
-            <li><a href="tree.html">Tree</a></li>
+            <li class="active"><a href="tree.html">Tree</a></li>
         </ul>
     </nav>
 
     <!-- Konten Materi Stack -->
     <main class="main-content">
-        <h1>Quick Sort</h1>
+        <h1>Tree</h1>
         
-        <p> Quicksort adalah salah satu algoritme penyortiran tercepat. Algoritma Quicksort mengambil array nilai, 
-            memilih salah satu nilai sebagai elemen 'pivot', dan memindahkan nilai lainnya sehingga nilai yang lebih rendah berada di sebelah kiri elemen pivot, dan nilai yang lebih tinggi berada di sebelah kanannya.</p>
+        <p><strong>Tree</strong>adalah struktur data non-linear yang bentuknya menyerupai pohon terbalik. Jika pada ekosistem biologi akar ada di bawah, maka pada computer science <strong>akar (root)</strong> berada di posisi paling atas, sedangkan <strong>cabang (branches)</strong> dan <strong>daun (leaves)</strong> menjalar ke bawah.<br>
+            <strong>Istilah penting pada Tree:</strong><br>
+            1. Node (Key): Komponen tree yang menyimpan informasi/nilai.<br>
+            2. Edge: Garis penghubung antara satu node dengan node lainnya.<br>
+            3. Root: Node teratas yang tidak memiliki cabang masuk.<br>
+            4. Parent: Node yang memiliki cabang/anak yang keluar darinya.<br>
+            5. Children: Node anak hasil turunan langsung dari suatu parent.<br>
+            6. Siblings: Node-node yang berbagi parent yang sama.<br>
+            7. Leaf Node (Daun): Node paling ujung bawah yang sudah tidak memiliki anak lagi<br>
+            8. Subtree: Kumpulan node dan edge yang terdiri dari sebuah parent dan semua keturunannya.
+        </p>
 
-        <div class="underflow-warning">
-            <strong>Rekursi:</strong>  adalah ketika fungsi memanggil dirinya sendiri.<br>
-Setelah algoritma Quicksort menempatkan elemen pivot di antara sub-array dengan nilai yang lebih rendah di sisi kiri, dan sub-array dengan nilai yang lebih tinggi di sisi kanan, algoritme memanggil dirinya sendiri dua kali, sehingga Quicksort berjalan lagi untuk sub-array di sisi kiri, dan untuk sub-array di sisi kanan. Algoritma Quicksort terus menyebut dirinya sendiri hingga sub-array terlalu kecil untuk diurutkan.
+        <div class="op-item">
+            <span class="op-name">Binary Tree</span> &rarr; jenis tree khusus di mana setiap parent maksimal hanya boleh memiliki dua anak saja (biasa disebut left child dan right child).
         </div>
+        <p>Salah satu aplikasi nyata dari Binary Tree adalah menyelesaikan persamaan matematika berdasar tingkatan operator (operator precedence) dan tanda kurung.
+            Aturan Pembentukan: Kurung buka ( membuat sub-tree baru di kiri, operator menjadi parent/root, angka/operand menjadi leaf node, dan kurung tutup ) menandakan kembali ke parent di atasnya.
+            Karena dalam proses pembuatan kita harus bisa "kembali ke parent", kita membutuhkan bantuan struktur data Stack untuk mencatat jejak parent sebelumnya.
+
         <div class="image-placeholder">
-            <img src="qs.jpg">
-        </div>  
-	<h3>Implementasi Python:</h3>
+            <img src="tree.png">
+        </div>
+
+	<h3>Implementasi Python:</h3><br>
+    Kode Program Binary Tree
         <div class="code-container">
             <div class="code-header">
                 <span>python</span>
                 <button class="copy-btn" onclick="copyCode()">Copy</button>
             </div>
             <pre id="python-code">
-def partition(array, low, high):
-  pivot = array[high]
-  i = low - 1
+class BinaryTree:
+    def __init__(self, root_val):
+        self.key = root_val
+        self.leftChild = None
+        self.rightChild = None
 
-  for j in range(low, high):
-     if array[j] <= pivot:
-       i += 1
-       array[i], array[j] = array[j], array[i]
+    # Menyisipkan anak kiri
+    def insertLeft(self, new_node):
+        if self.leftChild == None:
+            self.leftChild = BinaryTree(new_node)
+        else:
+            # Jika sudah ada anak kiri, sisipkan di tengahnya
+            t = BinaryTree(new_node)
+            t.leftChild = self.leftChild
+            self.leftChild = t
 
-  array[i+1], array[high] = array[high], array[i+1]
-  return i+1
+    # Menyisipkan anak kanan
+    def insertRight(self, new_node):
+        if self.rightChild == None:
+            self.rightChild = BinaryTree(new_node)
+        else:
+            # Jika sudah ada anak kanan, sisipkan di tengahnya
+            t = BinaryTree(new_node)
+            t.rightChild = self.rightChild
+            self.rightChild = t
 
-def quicksort(array, low=0, high=None):
-  if high is None:
-    high = len(array) - 1
+    def getRightChild(self):
+        return self.rightChild
 
-  if low < high:
-    pivot_index = partition(array, low, high)
-    quicksort(array, low, pivot_index-1)
-    quicksort(array, pivot_index+1, high)
+    def getLeftChild(self):
+        return self.leftChild
 
-mylist = [64, 34, 25, 5, 22, 11, 90, 12]
-quicksort(mylist)
-print(mylist)</pre>
+    def setRootVal(self, obj):
+        self.key = obj
+
+    def getRootVal(self):
+        return self.key
+</pre>
 </div>
-     </main>
+Kode Program Parse Tree
+ <div class="code-container">
+            <div class="code-header">
+                <span>python</span>
+                <button class="copy-btn" onclick="copyCode()">Copy</button>
+            </div>
+            <pre id="python-code">
+import operator
+
+def evaluate(parse_tree):
+    # Menyediakan dictionary fungsi matematika dasar
+    opers = {
+        '+': operator.add, 
+        '-': operator.sub, 
+        '*': operator.mul, 
+        '/': operator.truediv
+    }
+
+    left = parse_tree.getLeftChild()
+    right = parse_tree.getRightChild()
+
+    # Jika node ini memiliki anak kiri dan kanan, berarti node ini adalah OPERATOR
+    if left and right:
+        fn = opers[parse_tree.getRootVal()]
+        # Selesaikan anak kiri dan kanan secara rekursif, lalu operasikan
+        return fn(evaluate(left), evaluate(right))
+    else:
+        # Base case: Jika tidak punya anak, berarti node ini adalah ANGKA (operand)
+        return parse_tree.getRootVal()</pre>
+</div>
+
+    </main>
     <script>
         function copyCode() {
             const code = document.getElementById('python-code').innerText;
